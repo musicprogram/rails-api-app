@@ -8,20 +8,21 @@ class User < ApplicationRecord
          :jwt_authenticatable, jwt_revocation_strategy: self
 
   has_many :companies
+
+  ROLES = %w{super_admin admin manager editor colaborator}
+
+
+  
+  ROLES.each do |role_name|
+    define_method "#{role_name}?" do
+      rolle == role_name
+    end
+  end
+
+
+
   def jwt_payload
     super
   end
 
 end
-
-
-
-=begin
-{
-    "user": {
-        "email":"user@rails.com",
-        "password": "12345678"
-    }
-}
-
-=end
